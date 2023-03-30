@@ -72,7 +72,7 @@ int main(){
 		juncao = juncao + delta;
 	}
 	
-	tempo = juncao / LINHAS;
+	tempo = juncao / LINHAS;		//seria mais conveniente pegar o tempo final apos a regiao paralela, pois resultara no mesmo da media dos 4
 	teste = total;
     if(tempo < paralelo) paralelo = tempo;
 	media = teste / TAMANHO;
