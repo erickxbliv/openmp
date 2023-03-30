@@ -13,7 +13,7 @@ int main(){
 	long int *vetor = (long int*)malloc(TAMANHO*sizeof(long int)), i, total = 0, value = 0;
 	
 	for(i = 0; i < TAMANHO; i++){
-		vetor[i] = rand() % 2;						//infelizmente por causa da velocidade, as chances de cair 0 e 1 sao 50% cada, e maior a amostra mais visivel isso
+		vetor[i] = rand() % 2;				//infelizmente por causa da velocidade, as chances de cair 0 e 1 sao 50% cada, e maior a amostra mais visivel isso
 													//printf("%d : %d\n",i,vetor[i]);
 		value = value + vetor[i];
 	}
@@ -27,7 +27,7 @@ int main(){
 		long int min = omp_get_thread_num()*(TAMANHO/LINHAS), max = (omp_get_thread_num()+1)*(TAMANHO/LINHAS), j, parte = 0;
 		double fim, delta;
 		
-		//#pragma omp for private(j)
+		//#pragma omp for private(j)			//manualmente dividi o vetor para as threads para entender melhor
 		for(j = min; j < max; j++){
 			parte = parte + vetor[j];
 											//if(omp_get_thread_num() == 0) printf("%d : %d : %d\n",omp_get_thread_num(),j,vetor[j]);
@@ -55,8 +55,7 @@ int main(){
 		long int i, k = 0, parte = 0;
 		double fim, delta;
 		
-		//#pragma omp for private(k)
-		for(k = 0; k < TAMANHO; k++){
+		for(k = 0; k < TAMANHO; k++){			//4 execucoes paralelas concorrendo pelo melhor tempo
 			parte = parte + vetor[k];
 			
 											//printf("aa %d\n\n",k);
