@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <omp.h>
-#include <windows.h>
+//#include <windows.h>
 
 #define TAMANHO 500000000
 #define LINHAS 4
