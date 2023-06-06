@@ -4,10 +4,10 @@
 #include <time.h>
 #include <conio.h>
 
-#define TAM_NUM 5
+#define TAM_MAX_NUM 5				
 
-#define TAMANHO 1000
-#define DIGITOS 5				//MUDAR TAMBEM NO PRINT DA CHAVE
+#define TAMANHO 100
+#define DIGITO_ATUAL 2				//MUDAR TAMBEM NO PRINT DA CHAVE DO NO
 
 
 
@@ -172,31 +172,36 @@ void mostrar(struct no* filho, int* x, int* y){
 													
 	HANDLE hConsole;
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	
+	gotoyx((*x),(*y));
+	SetConsoleTextAttribute(hConsole, 0x70);
+	printf("%02d",filho->chave);
+	SetConsoleTextAttribute(hConsole, 7);
+
+	if(filho->esquerda == NULL && filho->direita == NULL){
+		SetConsoleTextAttribute(hConsole, BACKGROUND_RED);
+		printf(")");//printf(" %c",186);
+		SetConsoleTextAttribute(hConsole, 7);
+	}else if(filho->esquerda == NULL && filho->direita != NULL) printf("%c",217);
+	else if(filho->esquerda != NULL && filho->direita == NULL) printf("%c",191);
+	else printf("%c",180);
+	
+	(*x)++;
 
     if(filho != NULL){
     	
     	
     	
     	if(filho->direita != NULL){
-    		(*y) += TAM_NUM;
+    		(*y) += DIGITO_ATUAL;
     		//printf("%c",218);
     		mostrar(filho->direita,x,y);
+    		(*y) += DIGITO_ATUAL;
 		} 
     	
     												//Sleep(750);
-		gotoyx((*x),(*y));
-		SetConsoleTextAttribute(hConsole, 0x70);
-		printf("%05d",filho->chave);
-		SetConsoleTextAttribute(hConsole, 7);
 		
-
-		if(filho->esquerda == NULL && filho->direita == NULL){
-			SetConsoleTextAttribute(hConsole, BACKGROUND_RED);
-			printf(")");//printf(" %c",186);
-			SetConsoleTextAttribute(hConsole, 7);
-		}else if(filho->esquerda == NULL && filho->direita != NULL) printf("%c",217);
-		else if(filho->esquerda != NULL && filho->direita == NULL) printf("%c",191);
-		else printf("%c",180);
 		
 		
 		
@@ -208,7 +213,7 @@ void mostrar(struct no* filho, int* x, int* y){
 			//printf("%d    ",linha);
 			
 			for(int i = 1; i <= linha; i++){
-				gotoyx(((*x)+i),(*y)+1+(DIGITOS-1));
+				gotoyx(((*x)+i),(*y)+1+(DIGITO_ATUAL-1));
 				printf("%c",179);
 			}
 		} 
@@ -222,7 +227,7 @@ void mostrar(struct no* filho, int* x, int* y){
 			//printf("%d    ",linha);
 			
 			for(int i = 1; i <= linha; i++){
-				gotoyx(((*x)-i),(*y)+1+(DIGITOS-1));
+				gotoyx(((*x)-i),(*y)+1+(DIGITO_ATUAL-1));
 				printf("%c",179);
 			}
 		} 
@@ -236,14 +241,14 @@ void mostrar(struct no* filho, int* x, int* y){
 		
 		
 		if(filho->esquerda != NULL){
-			(*y) += TAM_NUM;
+			(*y) += TAM_MAX_NUM;
 			(*x)++;
 			//printf("%c",192);
 			mostrar(filho->esquerda,x,y);
 			(*x)--;
 		}
         
-        (*y) -= TAM_NUM;
+        (*y) -= TAM_MAX_NUM;
 
     }else return;
     
@@ -324,7 +329,7 @@ void libera(arvore* z){
     if(z == NULL) return;
     if( z->raiz != NULL) percurso(z->raiz);
     z->qtd = 0;
-    printf("\n\n\n\n\nliberado!\n");
+    printf("\n\nliberado!\n");
     return;
 }
 
@@ -406,6 +411,6 @@ int main(){
     
     
     libera(z);
-    //getch();
+    getch();
     return 0;
 }
